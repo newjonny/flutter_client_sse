@@ -20,7 +20,9 @@ class SSEClient {
         _client = http.Client();
         var request = new http.Request("GET", Uri.parse(url));
         //Adding headers to the request
-        request.headers = headers;
+        headers.forEach((k,v) {
+          request.headers[k] = v;
+        });
         Future<http.StreamedResponse> response = _client.send(request);
 
         //Listening to the response as a stream
