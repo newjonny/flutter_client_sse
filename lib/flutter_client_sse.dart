@@ -7,7 +7,7 @@ part 'sse_event_model.dart';
 
 class SSEClient {
   static http.Client _client = new http.Client();
-  static Stream<SSEModel> subscribeToSSE(String url, String token) {
+  static Stream<SSEModel> subscribeToSSE(String url, Map<String, String> headers) {
     //Regex to be used
     var lineRegex = RegExp(r'^([^:]*)(?::)?(?: )?(.*)?$');
     //Creating a instance of the SSEModel
@@ -20,9 +20,7 @@ class SSEClient {
         _client = http.Client();
         var request = new http.Request("GET", Uri.parse(url));
         //Adding headers to the request
-        request.headers["Cache-Control"] = "no-cache";
-        request.headers["Accept"] = "text/event-stream";
-        request.headers["Cookie"] = token;
+        request.headers = headers;
         Future<http.StreamedResponse> response = _client.send(request);
 
         //Listening to the response as a stream
