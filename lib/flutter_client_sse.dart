@@ -24,11 +24,11 @@ class SSEClient {
           request.headers[k] = v;
         });
         Future<http.StreamedResponse> response = _client.send(request);
-        
-        streamController.add(SSEModel(data: response.statusCode, id: '', event: 'response.statusCode'));
 
         //Listening to the response as a stream
         response.asStream().listen((data) {
+          streamController.add(SSEModel(
+              data: data.statusCode, id: '', event: 'data.statusCode'));
           //Applying transforms and listening to it
           data.stream
             ..transform(Utf8Decoder())
