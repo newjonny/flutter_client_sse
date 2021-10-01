@@ -28,7 +28,7 @@ class SSEClient {
         //Listening to the response as a stream
         response.asStream().listen((data) {
           streamController.add(SSEModel(
-              data: data.statusCode, id: '', event: 'data.statusCode'));
+              data: data.statusCode.toString(), id: '', event: 'data.statusCode'));
           //Applying transforms and listening to it
           data.stream
             ..transform(Utf8Decoder())
