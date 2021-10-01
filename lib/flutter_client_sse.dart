@@ -24,6 +24,8 @@ class SSEClient {
           request.headers[k] = v;
         });
         Future<http.StreamedResponse> response = _client.send(request);
+        
+        streamController.add(SSEModel(data: response.statusCode, id: '', event: 'response.statusCode'));
 
         //Listening to the response as a stream
         response.asStream().listen((data) {
